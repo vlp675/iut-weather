@@ -18,6 +18,13 @@
 
                     @if(isset($weather))
                         <h3 class="p-4"><b>Weather Information</b></h3>
+
+                        <!-- Bouton de save les infos -->
+                        <form method="POST" action="{{ route('saveCity') }}">
+                            @csrf 
+                            <button type="submit" name="saveCity" class="px-6 py-2 text-green-500 mt-4" value="{{$weather['name']}}">Save City</button>
+                        </form>
+
                         <p><b>City:</b> {{ $weather['name'] }}</p>
                         <p><b>Temperature:</b> {{ $weather['main']['temp'] }}°C</p>
                         <p><b>Weather:</b> {{ $weather['weather'][0]['description'] }}</p>

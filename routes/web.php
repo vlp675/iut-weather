@@ -5,12 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\CityController;
 
-// Route d'accueil
+// Home route
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Routes d'authentification
+// Authentication routes
 Route::get('/register', function () {
     return view('register');
 });
@@ -48,5 +48,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Routes d'authentification
+// Authentication routes
 require __DIR__.'/auth.php';

@@ -9,11 +9,13 @@ use App\Models\UserPlaces;
 
 class CityController extends Controller
 {
+    // Save a city for the authenticated user
     public function saveCity (Request $request) {
         $name = $request->input('saveCity');
         $place = Places::where('name', $name)->first();
-        if (!$place)
-        {
+        
+        // If the city doesn't exist, create it
+        if (!$place) {
             $place = Places::create([
                 'name' => $name
             ]);
@@ -22,9 +24,9 @@ class CityController extends Controller
         $userId = Auth::id();
         $placeId = $place->id;
 
+        // Link the city to the user if not already linked
         $userPlace = UserPlaces::where('place_id', $placeId)->where('user_id', $userId)->first();
         if (!$userPlace) {
-
             $userPlace = UserPlaces::create([
                 'user_id' => $userId,
                 'place_id' => $placeId,
@@ -33,32 +35,37 @@ class CityController extends Controller
             ]);
         }
 
+        // Redirect to the list of user's cities
         return redirect()->route('getCity');
     } 
 
+    // Display all cities saved by the authenticated user
     public function getCity () {
         $userId = Auth::id();
 
+        // Retrieve all user-related places with their details
         $cities = UserPlaces::with('place')->where('user_id', $userId)->get();
         return view('places', [
             'cities' => $cities,
         ]);
     } 
 
+    // Delete a city (implementation pending)
     public function deleteCity (Request $request) {
 
     } 
 
+    // Mark a city as the user's favorite
     public function addFavoriteCity (Request $request) {
         $city_id = $request->input('addFavoriteCity');
         $user_id = Auth::id();
 
-        // Retire l'ancien favori, s'il y en a un
+        // Remove existing favorite city for the user
         UserPlaces::where('user_id', $user_id)
             ->where('is_favorite', true)
             ->update(['is_favorite' => false]);
 
-        // Marque cette ville comme favorite
+        // Mark the selected city as favorite
         UserPlaces::where('user_id', $user_id)
             ->where('place_id', $city_id)
             ->update(['is_favorite' => true]);
@@ -66,11 +73,12 @@ class CityController extends Controller
         return redirect()->route('getCity')->with('status', 'Ville ajoutée aux favoris !');
     } 
 
+    // Remove a city from the user's favorites
     public function removeFavoriteCity (Request $request) {
         $city_id = $request->input('removeFavoriteCity');
         $user_id = Auth::id();
 
-        // Marque cette ville comme favorite
+        // Update the city to no longer be a favorite
         UserPlaces::where('user_id', $user_id)
             ->where('place_id', $city_id)
             ->update(['is_favorite' => false]);

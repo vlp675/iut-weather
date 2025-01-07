@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class WeatherController extends Controller
+class ForecastController extends Controller
 {
     protected $apiKey;
     protected $baseUrl;
@@ -17,32 +17,36 @@ class WeatherController extends Controller
         $this->baseUrl = config('services.openweather.baseUrl');
     }
 
-    // Fetch and display weather information for a given city
-    public function showWeather(Request $request, $cityName = null)
+    // Fetch and display weather forecast for a given city
+    public function forecastCity(Request $request)
     {
-        // Retrieve the city name from the request input
-        $cityName = $request->input('cityName');
+        // Get city ID
+        $city_name = $request->input('forecastCity');
 
-        // Make an API call to fetch weather data
-        $response = Http::get("{$this->baseUrl}weather", [
-            'q' => $cityName,
+        // dd($city_name);
+
+        // Make an API call to fetch weather forecast data
+        $response = Http::get("{$this->baseUrl}forecast", [
+            'q' => $city_name,
             'appid' => $this->apiKey,
             'units' => 'metric', 
-            'lang' => 'fr' 
+            'lang' => 'fr'
         ]);
 
-        // If the API call is successful, display the weather data
+        // dd($response);
+
+        // If the API call is successful, display the forecast data
         if ($response->successful()) {
             $weatherData = $response->json();
-            return view('dashboard', [
+            return view('forecast', [
                 'weather' => $weatherData,
             ]);
         } else {
             // If the API call fails, return an error message
             return view('dashboard', [
                 'weather' => null,
-                'error' => 'Impossible de récupérer les données météorologiques.'
+                'error' => 'Impossible de récupérer les données de prévisions météorologiques.'
             ]);
         }
-    }
+    } 
 }

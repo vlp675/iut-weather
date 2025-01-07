@@ -52,18 +52,53 @@
                                     </form>
                                     @endif
 
+                                    <form method="POST" action="{{ route('forecastCity') }}">
+                                        @csrf 
+                                        <button 
+                                            value="{{ $city->place->name }}"
+                                            type="submit" 
+                                            name="forecastCity" 
+                                            class="px-4 py-2 text-sm font-medium text-black bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none">
+                                            See Forecast
+                                        </button>
+                                    </form>
+
+                                    @if ($city->send_forecast)
+                                    <form action="{{ route('unsubscribeToDailyReport') }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button 
+                                            name="unsubscribeToDailyReport"
+                                            value="{{ $city->place->id }}"
+                                            type="submit"
+                                            class="px-4 py-2 text-sm font-medium text-black bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none">
+                                            Disallow daily report
+                                        </button>
+                                    </form>
+                                    @else
                                     <!-- Button to subscribe to daily weather reports -->
-                                    <button 
-                                        class="px-4 py-2 text-sm font-medium text-black bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none">
-                                        Receive a daily report
-                                    </button>
+                                    <form action="{{ route('subscribeToDailyReport') }}" method="POST" class="inline-block">
+                                        @csrf
+                                        <button 
+                                            name="subscribeToDailyReport"
+                                            value="{{ $city->place->id }}"
+                                            type="submit"
+                                            class="px-4 py-2 text-sm font-medium text-black bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none">
+                                            Receive a daily report
+                                        </button>
+                                    </form>
+                                    @endif
 
                                     <!-- Form to delete the city from the saved list -->
                                     <form action="{{ route('removeCity') }}" method="POST" class="inline-block">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-800 text-sm">
-                                        Delete
+                                        <button
+                                            name="removeCity"
+                                            value="{{ $city->place->id }}"
+                                            type="submit"
+                                            class="px-4 py-2 text-sm font-medium text-red-600 bg-red-100 border border-red-400 rounded-lg hover:bg-red-200 focus:ring focus:ring-red-300">
+                                            Delete City
                                         </button>
                                     </form>
                                 </div>

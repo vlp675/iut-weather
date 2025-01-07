@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Places;
 use App\Models\UserPlaces;
 
+
 class CityController extends Controller
 {
     // Save a city for the authenticated user
@@ -50,16 +51,28 @@ class CityController extends Controller
         ]);
     } 
 
-    // Delete a city (implementation pending)
-    public function deleteCity (Request $request) {
+    // Delete a city
+    public function removeCity(Request $request)
+    {
+        $city_id = $request->input('removeCity');
+        $user_id = Auth::id();
 
-    } 
+        // dd($city_id);
+    
+        // Delete corresponding entry in place_user table
+        UserPlaces::where('user_id', $user_id)
+            ->where('place_id', $city_id)
+            ->delete();
+    
+        return redirect()->route('getCity')->with('status', 'City deleted !');
+    }
 
     // Mark a city as the user's favorite
     public function addFavoriteCity (Request $request) {
         $city_id = $request->input('addFavoriteCity');
         $user_id = Auth::id();
 
+        // dd($city_id);
         // Remove existing favorite city for the user
         UserPlaces::where('user_id', $user_id)
             ->where('is_favorite', true)
@@ -70,7 +83,7 @@ class CityController extends Controller
             ->where('place_id', $city_id)
             ->update(['is_favorite' => true]);
 
-        return redirect()->route('getCity')->with('status', 'Ville ajoutée aux favoris !');
+        return redirect()->route('getCity')->with('status', 'City added to favorites!');
     } 
 
     // Remove a city from the user's favorites
@@ -83,6 +96,32 @@ class CityController extends Controller
             ->where('place_id', $city_id)
             ->update(['is_favorite' => false]);
 
-        return redirect()->route('getCity')->with('status', 'Ville retirée des favoris !');
+        return redirect()->route('getCity')->with('status', 'City removed from favorites!');
+    } 
+
+    // Subscribe to daily weather reports
+    public function subscribeToDailyReport (Request $request) {
+        $city_id = $request->input('subscribeToDailyReport');
+        $user_id = Auth::id();
+    
+        // Update the city to receive daily reports
+        UserPlaces::where('user_id', $user_id)
+            ->where('place_id', $city_id)
+            ->update(['send_forecast' => true]);
+    
+        return redirect()->route('getCity')->with('status', 'You will receive the updates regularly!');
+    } 
+
+    // Unsubscribe daily weather reports
+    public function unsubscribeToDailyReport (Request $request) {
+        $city_id = $request->input('unsubscribeToDailyReport');
+        $user_id = Auth::id();
+    
+        // Update the city to no longer receive daily reports
+        UserPlaces::where('user_id', $user_id)
+            ->where('place_id', $city_id)
+            ->update(['send_forecast' => false]);
+    
+        return redirect()->route('getCity')->with('status', 'You will no longer receive the updates regularly!');
     } 
 }

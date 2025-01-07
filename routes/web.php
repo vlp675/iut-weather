@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\ForecastController;
+use App\Http\Controllers\CsvController;
 
 // Home route
 Route::get('/', function () {
@@ -32,6 +34,12 @@ Route::get('/getCity', [CityController::class, 'getCity'])->name('getCity');
 // Save Cities
 Route::post('/saveCity', [CityController::class, 'saveCity'])->name('saveCity');
 
+// Forecast Cities
+Route::post('/forecastCity', [ForecastController::class, 'forecastCity'])->name('forecastCity');
+
+// CSV Cities
+Route::post('/csvCity', [CsvController::class, 'csvCity'])->name('csvCity');
+
 // Remove Cities
 Route::delete('/removeCity', [CityController::class, 'removeCity'])->name('removeCity');
 
@@ -40,6 +48,12 @@ Route::delete('/removeFavoriteCity', [CityController::class, 'removeFavoriteCity
 
 // Add Favorite Cities
 Route::post('/addFavoriteCity', [CityController::class, 'addFavoriteCity'])->name('addFavoriteCity');
+
+// Unsubscribe to daily weather reports
+Route::delete('/unsubscribeToDailyReport', [CityController::class, 'unsubscribeToDailyReport'])->name('unsubscribeToDailyReport');
+
+// Subscribe to daily weather reports
+Route::post('/subscribeToDailyReport', [CityController::class, 'subscribeToDailyReport'])->name('subscribeToDailyReport');
 
 // User
 Route::middleware('auth')->group(function () {

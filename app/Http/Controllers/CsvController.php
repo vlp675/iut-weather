@@ -13,8 +13,8 @@ class CsvController extends Controller
     public function downloadCSV($city)
     {
 
-        $this->apiKey = config('services.openweather.api_key');
-        $this->baseUrl = config('services.openweather.base_url');
+        $this->apiKey = config('services.openweather.key');
+        $this->baseUrl = config('services.openweather.baseUrl');
 
         $response = Http::get("$this->baseUrl/data/2.5/weather", [
             'q' => $city,

@@ -17,48 +17,57 @@ class ApiWeatherController extends Controller
         $this->baseUrl = config('services.openweather.baseUrl');
     }
 
+    // Get current weather data for a specific city
     public function getWeather(Request $request)
     {
+        // Validate the input
         $request->validate([
             'place' => 'string|max:255',
         ]);
 
         $city = $request->input('place');
 
+        // Send a request to the OpenWeather API to get current weather
         $response = Http::get($this->baseUrl . "weather", [
             'q' => $city,
-            'appid' => $this->apiKey,
-            'units' => 'metric',
+            'appid' => $this->apiKey, 
+            'units' => 'metric', 
             'lang' => 'fr'
         ]);
 
         if ($response->successful()) {
-            // Return view with data
+            // Return the weather data as a resource
             return new WeatherRessource($response->json());
         } else {
+            // Return an error message if the API request fails
             return "error";
         }
     }
 
-    public function getForecast(Request $request) 
+    // Get weather forecast data for a specific city
+    public function getForecast(Request $request)
     {
+        // Validate the input
         $request->validate([
             'place' => 'string|max:255',
         ]);
 
+        // Retrieve the city name from the request
         $city = $request->input('place');
 
+        // Send a request to the OpenWeather API to get weather forecast
         $response = Http::get($this->baseUrl . "forecast", [
-            'q' => $city,
+            'q' => $city, 
             'appid' => $this->apiKey,
-            'units' => 'metric',
-            'lang' => 'fr'
+            'units' => 'metric', 
+            'lang' => 'fr' 
         ]);
 
         if ($response->successful()) {
-            // Return view with data
+            // Return the forecast data as a resource
             return new WeatherRessource($response->json());
         } else {
+            // Return an error message if the API request fails
             return "error";
         }
     }

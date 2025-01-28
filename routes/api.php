@@ -9,16 +9,19 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// API route to get the weather of a city
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::get('/weather', [ApiWeatherController::class, 'getWeather'])->name('api.weather');
 });
 
+// API route to get the forecast
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::get('/forecast', [ApiWeatherController::class, 'GetForecast'])->name('api.forecast');
 });
 
+// API route to get the user saved places
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::get('/userplace', [ApiUserPlaceController::class, 'GetUserPlace'])->name('api.userplace');
+    Route::get('/users/places', [ApiUserPlaceController::class, 'getUserPlace'])->name('api.getUserPlace');
 });
 
 // Route::post('/tokens/create', function (Request $request) {

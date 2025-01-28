@@ -12,50 +12,52 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Authentication routes
+// Registration route
 Route::get('/register', function () {
     return view('register');
 });
 
+// Login route
 Route::get('/login', function () {
     return view('login');
 });
 
-// Weather
+// Dashboard of iut-weather
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Route to get the weather of a city
 Route::post('/dashboard', [WeatherController::class, 'showWeather'])->name('weather.show');
 
-// Cities
+// Route to get all the cities of a user
 Route::get('/getCity', [CityController::class, 'getCity'])->name('getCity');
 
-// Save Cities
+// Route to save a city for a user
 Route::post('/saveCity', [CityController::class, 'saveCity'])->name('saveCity');
 
-// Forecast Cities
+// Route to display/get all the weather of a city on a long term
 Route::post('/forecastCity', [ForecastController::class, 'forecastCity'])->name('forecastCity');
 
-// CSV Cities
+// Route to get the CSV for a city
 Route::post('/csvCity', [CsvController::class, 'csvCity'])->name('csvCity');
 
-// Remove Cities
+// Route to delete the city of a user
 Route::delete('/removeCity', [CityController::class, 'removeCity'])->name('removeCity');
 
-// Remove Favorite Cities
+// Route to remove Favorite City
 Route::delete('/removeFavoriteCity', [CityController::class, 'removeFavoriteCity'])->name('removeFavoriteCity');
 
-// Add Favorite Cities
+// Route to add Favorite City
 Route::post('/addFavoriteCity', [CityController::class, 'addFavoriteCity'])->name('addFavoriteCity');
 
-// Unsubscribe to daily weather reports
+// Route to unsubscribe to daily weather reports
 Route::delete('/unsubscribeToDailyReport', [CityController::class, 'unsubscribeToDailyReport'])->name('unsubscribeToDailyReport');
 
-// Subscribe to daily weather reports
+// Route to Subscribe to daily weather reports
 Route::post('/subscribeToDailyReport', [CityController::class, 'subscribeToDailyReport'])->name('subscribeToDailyReport');
 
-// User
+// Routes about user profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

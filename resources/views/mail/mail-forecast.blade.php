@@ -1,5 +1,4 @@
 <div style="font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f9; padding: 20px; border-radius: 8px;">
-    <!-- Walk as if you are kissing the Earth with your feet. - Thich Nhat Hanh -->
     <h1 style="color: #4CAF50;">Daily Report</h1>
     <p style="font-size: 16px; color: #333;">
         "Walk as if you are kissing the Earth with your feet." - Thich Nhat Hanh
@@ -29,13 +28,4 @@
             </tr>
         </tbody>
     </table>
-
-    <p style="font-size: 16px; color: #333; margin-top: 20px;">
-        We hope you have a peaceful and productive day ahead.
-    </p>
-
-    <p style="font-size: 16px; color: #333;">
-        With kindness, <br>
-        Your Daily Report Team
-    </p>
 </div>

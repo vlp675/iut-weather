@@ -45,7 +45,7 @@ class ForecastController extends Controller
             // If the API call fails, return an error message
             return view('dashboard', [
                 'weather' => null,
-                'error' => 'Impossible de récupérer les données de prévisions météorologiques.'
+                'error' => 'Unable to get weather forecast data.'
             ]);
         }
     } 

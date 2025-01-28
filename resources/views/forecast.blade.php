@@ -13,7 +13,7 @@
                     <!-- Display header for saved cities list -->
                     <h3 class="text-lg font-semibold mb-4">Forecast of {{$weather['city']['name']}}</h3>
 
-                    <!-- Loop through the forecast data and display each day's weather details -->
+                    <!-- A for loop through the forecast data and display each day's weather -->
                     @for ($i = 0; $i < 40 ; $i+=8)
                         <div class="mb-4 p-4 border rounded-lg shadow-md">
                             <h2>{{ date('l \t\h\e jS \a\t H:i', $weather['list'][$i]['dt']) }}</h2>

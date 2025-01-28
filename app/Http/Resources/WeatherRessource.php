@@ -18,22 +18,13 @@ class WeatherRessource extends JsonResource
             'city' => $this['city']['name'] ?? 'Unknown city',
             'forecast' => array_map(function ($forecastItem) {
                 return [
-                    'datetime' => $forecastItem['dt_txt'] ?? null,
-                    'temperature' => $forecastItem['main']['temp'] ?? null,
-                    'humidity' => $forecastItem['main']['humidity'] ?? null,
-                    'weather_description' => $forecastItem['weather'][0]['description'] ?? 'No description available',
-                    'wind_speed' => $forecastItem['wind']['speed'] ?? null,
+                    'datetime' => $forecastItem['dt_txt'],
+                    'temperature' => $forecastItem['main']['temp'],
+                    'humidity' => $forecastItem['main']['humidity'],
+                    'weather_description' => $forecastItem['weather'][0]['description'],
+                    'wind_speed' => $forecastItem['wind']['speed'],
                 ];
             }, $this['list'] ?? []),
         ];
     }
-
-    // public function currentWeatherCity (Request $request)
-    // {
-    //     return [
-    //         'temp' => $this->temp,
-    //         'humidity' => $this->humidity,
-    //         'description' => $this->desc
-    //     ];
-    // }
 }

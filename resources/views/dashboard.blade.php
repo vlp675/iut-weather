@@ -18,7 +18,7 @@
                         <button type="submit" class="px-6 py-2 text-sky-500">Get Weather</button>
                     </form>
 
-                    <!-- Display weather information if available -->
+                    <!-- Display weather information if it exists -->
                     @if(isset($weather))
                         <h3 class="p-4"><b>Weather Information</b></h3>
 
@@ -28,7 +28,7 @@
                             <button type="submit" name="saveCity" class="px-6 py-2 text-green-500 mt-4" value="{{$weather['name']}}">Save City</button>
                         </form>
 
-                        <!-- Button to see the forecast information -->
+                        <!-- Button to see the forecast information of the city -->
                         <form method="POST" action="{{ route('forecastCity') }}">
                             @csrf 
                             <button 

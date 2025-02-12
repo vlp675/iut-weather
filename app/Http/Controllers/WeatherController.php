@@ -20,7 +20,7 @@ class WeatherController extends Controller
     // Fetch and display weather information for a given city
     public function showWeather(Request $request, $cityName = null)
     {
-        // Retrieve the city name from the request input
+        // Get the city name from the request input
         $cityName = $request->input('cityName');
 
         // Make an API call to fetch weather data

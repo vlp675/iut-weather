@@ -30,7 +30,7 @@ class SendForecast extends Command
      */
     public function handle()
     {
-        // Retrieve all subscribed users
+        // Get all subscribed users
         $subscribedUsers = UserPlaces::where('send_forecast', true)->get();
 
         foreach ($subscribedUsers as $subscription) {

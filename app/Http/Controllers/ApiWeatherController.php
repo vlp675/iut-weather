@@ -54,7 +54,7 @@ class ApiWeatherController extends Controller
             'place' => 'string|max:255',
         ]);
 
-        // Retrieve the city name from the request
+        // Get the city name from the request
         $city = $request->input('place');
 
         // Send a request to the OpenWeather API to get weather forecast

@@ -56,6 +56,8 @@
                         <p><b>City:</b> {{ $weather['name'] }}</p>
                         <p><b>Temperature:</b> {{ $weather['main']['temp'] }}°C</p>
                         <p><b>Weather:</b> {{ $weather['weather'][0]['description'] }}</p>
+                        <p><b>Longitude:</b> {{ $coordinates[0]['lon'] }}</p>
+                        <p><b>Latitude:</b> {{ $coordinates[0]['lat'] }}</p>
                     @endif             
                 </div>
             </div>

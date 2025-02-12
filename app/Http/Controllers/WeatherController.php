@@ -31,11 +31,20 @@ class WeatherController extends Controller
             'lang' => 'fr' 
         ]);
 
-        // If the API call is successful, display the weather data
-        if ($response->successful()) {
+        // Make an API call to get the coordinates of the city
+        $responseCoord = Http::get("http://api.openweathermap.org/geo/1.0/direct", [
+            'q' => $cityName,
+            'appid' => $this->apiKey,
+            'limit' => 1
+        ]);
+
+        // If the API call is successful, display the weather data and the coordinates
+        if ($response->successful() && $responseCoord->successful()) {
             $weatherData = $response->json();
+            $weatherCoord = $responseCoord->json();
             return view('dashboard', [
                 'weather' => $weatherData,
+                'coordinates' => $weatherCoord
             ]);
         } else {
             // If the API call fails, return an error message

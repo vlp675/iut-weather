@@ -37,7 +37,6 @@ class SendForecast extends Command
             $user = User::find($subscription->user_id);
             if ($user) {
                 try {
-                    // dd($user);
                     $filePath = $this->makeCSV("Dennevy");
 
                     // Send the mail

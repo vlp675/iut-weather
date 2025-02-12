@@ -23,8 +23,6 @@ class ForecastController extends Controller
         // Get city ID
         $city_name = $request->input('forecastCity');
 
-        // dd($city_name);
-
         // Make an API call to fetch weather forecast data
         $response = Http::get("{$this->baseUrl}forecast", [
             'q' => $city_name,
@@ -32,8 +30,6 @@ class ForecastController extends Controller
             'units' => 'metric', 
             'lang' => 'fr'
         ]);
-
-        // dd($response);
 
         // If the API call is successful, display the forecast data
         if ($response->successful()) {

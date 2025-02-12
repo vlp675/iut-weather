@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class WeatherRessource extends JsonResource
@@ -12,19 +11,13 @@ class WeatherRessource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request): array
-    {
+    public function toArray($request){
         return [
-            'city' => $this['city']['name'] ?? 'Unknown city',
-            'forecast' => array_map(function ($forecastItem) {
-                return [
-                    'datetime' => $forecastItem['dt_txt'],
-                    'temperature' => $forecastItem['main']['temp'],
-                    'humidity' => $forecastItem['main']['humidity'],
-                    'weather_description' => $forecastItem['weather'][0]['description'],
-                    'wind_speed' => $forecastItem['wind']['speed'],
-                ];
-            }, $this['list'] ?? []),
+            'city' => $this['name'] ?? 'Unknown city',
+            'temperature' => $this['main']['temp'],
+            'humidity' => $this['main']['humidity'],
+            'weather_description' => $this['weather'][0]['description'],
+            'wind_speed' => $this['wind']['speed'],
         ];
     }
 }

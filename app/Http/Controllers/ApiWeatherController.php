@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\WeatherRessource;
+use App\Http\Resources\ForecastRessource;
 use Illuminate\Support\Facades\Http;
 
 class ApiWeatherController extends Controller
@@ -11,6 +12,7 @@ class ApiWeatherController extends Controller
     protected $apiKey;
     protected $baseUrl;
 
+    // Constructor to initialize API key and base URL from the configuration
     public function __construct()
     {
         $this->apiKey = config('services.openweather.key');
@@ -28,7 +30,7 @@ class ApiWeatherController extends Controller
         $city = $request->input('place');
 
         // Send a request to the OpenWeather API to get current weather
-        $response = Http::get($this->baseUrl . "weather", [
+        $response = Http::get($this->baseUrl."weather", [
             'q' => $city,
             'appid' => $this->apiKey, 
             'units' => 'metric', 
@@ -36,7 +38,7 @@ class ApiWeatherController extends Controller
         ]);
 
         if ($response->successful()) {
-            // Return the weather data as a resource
+            // Return the weather data
             return new WeatherRessource($response->json());
         } else {
             // Return an error message if the API request fails
@@ -56,7 +58,7 @@ class ApiWeatherController extends Controller
         $city = $request->input('place');
 
         // Send a request to the OpenWeather API to get weather forecast
-        $response = Http::get($this->baseUrl . "forecast", [
+        $response = Http::get($this->baseUrl."forecast", [
             'q' => $city, 
             'appid' => $this->apiKey,
             'units' => 'metric', 
@@ -64,8 +66,8 @@ class ApiWeatherController extends Controller
         ]);
 
         if ($response->successful()) {
-            // Return the forecast data as a resource
-            return new WeatherRessource($response->json());
+            // Return the forecast weather
+            return new ForecastRessource($response->json());
         } else {
             // Return an error message if the API request fails
             return "error";
